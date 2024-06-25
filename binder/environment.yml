@@ -1,0 +1,22 @@
+# a mybinder.org-ready environment for demoing cocotb_kernel
+# this environment may also be used locally on Linux/MacOS/Windows, e.g.
+#
+#   conda env update --file binder/environment.yml
+#   conda activate cocotb-kernel-demo
+#
+name: cocotb-kernel-demo
+
+channels:
+  - conda-forge
+
+dependencies:
+  # runtime dependencies
+  - python >=3.10
+  - jupyterlab >=4.0.0,<5
+  # build dependencies
+  - flit
+  # additional packages for demos
+  - ipywidgets
+  - verilator >=5.006,<5.024
+  - gcc_linux-64
+  - gxx_linux-64
