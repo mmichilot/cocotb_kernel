@@ -1,0 +1,9 @@
+sim = "verilator"
+hdl_toplevel = "dff"
+hdl_toplevel_lang = "verilog"
+
+[build]
+verilog_sources = ["./dff.sv"]
+
+[test]
+waves = true
