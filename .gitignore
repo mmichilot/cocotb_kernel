@@ -1,1 +1,3 @@
-__pycache__
+__pycache__/
+sim_build/
+.ipynb_checkpoints/
