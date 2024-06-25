@@ -11,6 +11,7 @@ kernel_json = {
     "language": "python"
 }
 
+# TODO: Add support for custom configuration name
 def install_cocotb_kernelspec(user: bool = True, 
                               prefix: (str | None) = None, 
                               config_name: (str | None) = None) -> str:
@@ -45,8 +46,8 @@ def main(argv: (list[str] | None) = None) -> None:
 
     parser.add_argument(
         '--config-name',
-        help="Name of the config file to use",
-        default="cocotb.toml"
+        help="Name of the toml file (default is cocotb)",
+        default="cocotb"
     )
 
     args = parser.parse_args(argv)
