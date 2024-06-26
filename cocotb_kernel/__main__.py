@@ -16,6 +16,14 @@ def find_config() -> Path | None:
             return config_file
     return None
 
+def resolve_sources(sources: list[str]) -> list[Path]:
+    resolved_sources: list[Path] = []
+    for source in sources:
+        paths = Path('.').glob(source)
+        resolved_sources.append(*[path.resolve() for path in paths])
+    
+    return resolved_sources
+
 def main() -> None:
     if (config := find_config()) is None:
         raise RuntimeError("Cannot start cocotb kernel: couldn't find cocotb.toml")
@@ -33,7 +41,11 @@ def main() -> None:
     
     # Build
     build_options: dict[str, Any] = options['build']
-    runner.build(**build_options, 
+    verilog_sources = resolve_sources(build_options.pop('verilog_sources', []))
+    vhdl_sources = resolve_sources(build_options.pop('vhdl_sources', []))
+    runner.build(**build_options,
+                 verilog_sources=verilog_sources,
+                 vhdl_sources=vhdl_sources,
                  hdl_toplevel=hdl_toplevel,
                  parameters=parameters)
 
