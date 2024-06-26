@@ -18,9 +18,21 @@ Prerequisites:
 After installing the prerequisites, the kernel can be installed via pip.
 ```bash
 pip install cocotb_kernel
+```
 
-# Install the kernel to JupyterLab's user directory
+To complete the installation of kernel, execute one of the following commands:
+ ```
+# Install to Jupyter's user directory, ~/.local/share/jupyter/kernel
 python -m cocotb_kernel.install --user
+
+# or, if using conda / venv
+python -m cocotb_kernel.install --sys-prefix
+
+# or, a custom prefix (Warning: kernel might not be detected by Jupyter)
+python -m cocotb_kernel.install --prefix PREFIX
+
+# or, install to Jupyter's base directory, /usr/local/share/jupyter (requires root)
+sudo python -m cocotb_kernel.install
 ```
 
 ## Usage
@@ -65,3 +77,4 @@ root directory and create or open a notebook with the cocotb kernel.
 
 ## Planned Features
 - Move wavedrom support into kernel (cocotb v2.0 removes the wavedrom module)
+- Ability to specify a custom TOML filename, from the default `cocotb.toml`
