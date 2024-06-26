@@ -52,7 +52,7 @@ vhdl_sources = ["hdl/*.vhdl", "**/*.vhdl"]        # wildcards are also supported
 # Optional: Defines to set for building
 [build.defines]
 
-# Optional: Test options
+# Test options
 # https://docs.cocotb.org/en/stable/library_reference.html#cocotb.runner.Simulator.test
 [test]
 
