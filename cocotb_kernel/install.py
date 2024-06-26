@@ -6,12 +6,13 @@ from pathlib import Path
 from jupyter_client.kernelspec import install_kernel_spec
 
 kernel_json = {
-    "argv": [sys.executable, "-m", "cocotb_kernel", "-f", "{connection_file}"],
+    "argv": [sys.executable, "-m", "cocotb_kernel", 
+             "--connection-file", "{connection_file}"],
     "display_name": "cocotb",
     "language": "python"
 }
 
-# TODO: Add support for custom configuration name
+# TODO: Add support for custom config name
 def install_cocotb_kernelspec(user: bool = True, 
                               prefix: (str | None) = None, 
                               config_name: (str | None) = None) -> str:
@@ -22,7 +23,7 @@ def install_cocotb_kernelspec(user: bool = True,
         print('Installing cocotb kernelspec')
         return install_kernel_spec(td, 'cocotb', user=user, prefix=prefix)
 
-def main(argv: (list[str] | None) = None) -> None:
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Install kernelspec for cocotb kernel"
     )
@@ -50,7 +51,7 @@ def main(argv: (list[str] | None) = None) -> None:
         default="cocotb"
     )
 
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
 
     user = False
     prefix = None
