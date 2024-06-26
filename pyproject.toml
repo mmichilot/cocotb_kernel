@@ -4,10 +4,21 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "cocotb_kernel"
-authors = [{name = "Matthew Michilot", email = "matthew.michilot@gmail.com"}]
+authors = [
+    {name = "Matthew Michilot", email = "matthew.michilot@gmail.com"}
+]
 readme = "README.md"
 dependencies = ["cocotb>=1.8.1"]
 requires-python = ">=3.10,<4"
 license = {file = "LICENSE"}
-classifiers = ["License :: OSI Approved :: MIT License"]
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: cocotb",
+    "Topic :: Scientific/Engineering :: Electronic Design Automation (EDA)"
+]
 dynamic = ["version", "description"]
+
+[project.urls]
+Source = "https://github.com/mmichilot/cocotb_kernel"
