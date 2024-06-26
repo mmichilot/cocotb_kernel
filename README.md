@@ -18,6 +18,9 @@ Prerequisites:
 After installing the prerequisites, the kernel can be installed via pip.
 ```bash
 pip install cocotb_kernel
+
+# Install the kernel to JupyterLab's user directory
+python -m cocotb_kernel.install --user
 ```
 
 ## Usage
