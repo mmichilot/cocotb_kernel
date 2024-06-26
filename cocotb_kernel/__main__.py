@@ -1,5 +1,6 @@
 import sys
 import tomllib
+import argparse
 from pathlib import Path
 from typing import Any
 
@@ -25,6 +26,13 @@ def resolve_sources(sources: list[str]) -> list[Path]:
     return resolved_sources
 
 def main() -> None:
+    # Parse arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--connection-file', type=str)
+    parser.add_argument('--config-name', type=str) # TODO: Add support for custom config name
+    args = parser.parse_args()
+
+    # Load config
     if (config := find_config()) is None:
         raise RuntimeError("Cannot start cocotb kernel: couldn't find cocotb.toml")
 
@@ -51,7 +59,7 @@ def main() -> None:
 
     # Test
     test_options: dict[str, Any] = options['test']
-    test_args = [*test_options.get('test_args', []), *sys.argv[1:]]
+    test_args = [*test_options.pop('test_args', []), '-f', args.connection_file]
     runner.test(**test_options, 
                 test_module=test_module.__name__, 
                 hdl_toplevel=hdl_toplevel,
@@ -60,7 +68,7 @@ def main() -> None:
                 test_args=test_args,
                 # TODO: Remove workaround for cocotb v2.0
                 # Workaround for Verilator since its doesn't use test_args in cocotb v1.8.1
-                plusargs=test_args if simulator == 'verilator' else test_options.get('plusargs', []))
+                plusargs=test_args if simulator == 'verilator' else test_options.pop('plusargs', []))
 
 if __name__ == '__main__':
     main()
