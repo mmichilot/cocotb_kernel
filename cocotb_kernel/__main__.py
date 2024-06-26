@@ -1,4 +1,3 @@
-import sys
 import tomllib
 import argparse
 from pathlib import Path
@@ -35,10 +34,10 @@ def main() -> None:
     # Load config
     if (config := find_config()) is None:
         raise RuntimeError("Cannot start cocotb kernel: couldn't find cocotb.toml")
-
     with open(config, 'rb') as f:
         options = tomllib.load(f)
     
+    # Get simulator runner
     simulator = options['sim']
     runner = get_runner(simulator)
 
