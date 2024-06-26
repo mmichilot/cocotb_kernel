@@ -29,38 +29,32 @@ The TOML file follows the cocotb [runner](https://docs.cocotb.org/en/stable/libr
 ```toml
 # The simulator to build and simulate the HDL design
 # https://docs.cocotb.org/en/stable/simulator_support.html
-simulator = "icarus"|"questa"|"ghdl"|"riviera"|"verilator"|"xcelium"
+simulator = "icarus"
 
 # The top level HDL module
 hdl_toplevel = "foo"
 
 # The language of the top level HDL module
-hdl_toplevel_lang = "verilog"|"vhdl"
+hdl_toplevel_lang = "verilog"
 
 # Optional: Verilog parameters or VHDL generics
 [parameters]
-...
 
 # Build options
 # https://docs.cocotb.org/en/stable/library_reference.html#cocotb.runner.Simulator.build
 [build]
 verilog_sources = ["hdl/foo.sv", "../hdl/foo.sv"] # specify sources relative to cocotb.toml
 vhdl_sources = ["hdl/*.vhdl", "**/*.vhdl"]        # wildcards are also supported
-...
 
 # Optional: Defines to set for building
 [build.defines]
-...
 
-# Test options
+# Optional: Test options
 # https://docs.cocotb.org/en/stable/library_reference.html#cocotb.runner.Simulator.test
 [test]
-waves = true
-...
 
 # Optional: Extra environment variables to set for testing
 [test.extra_env]
-...
 ```
 
 Once the TOML file is created, navigate to or launch JupyterLab within the project's
