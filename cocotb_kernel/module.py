@@ -37,7 +37,7 @@ async def kernel_entry(dut: SimHandleBase) -> None:
     # Run ipykernel in a separate thread
     @cocotb.external # type: ignore
     def start_kernel() -> None:
-        app.initialize(cocotb.argv) # type: ignore
+        app.initialize(cocotb.argv[-2:]) # type: ignore
         app.shell.loop_runner = cocotb_loop_runner # type: ignore
         app.start() # type: ignore
 
