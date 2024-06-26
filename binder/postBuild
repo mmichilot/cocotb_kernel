@@ -31,7 +31,7 @@ _(sys.executable, "-m", "pip", "check")
 
 # install the kernel
 _(sys.executable, "-m", "flit", "install", "--symlink")
-_(sys.executable, "-m", "cocotb_kernel.install", "--user")
+_(sys.executable, "-m", "cocotb_kernel.install", "--sys-prefix")
 
 # install WaveDromPy
 _(sys.executable, "-m", "pip", "install", "wavedrom")
