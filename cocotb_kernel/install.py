@@ -9,7 +9,10 @@ kernel_json = {
     "argv": [sys.executable, "-m", "cocotb_kernel", 
              "--connection-file", "{connection_file}"],
     "display_name": "cocotb",
-    "language": "python"
+    "language": "python",
+    "metadata": {
+        "debugger": True
+    }
 }
 
 # TODO: Add support for custom config name
