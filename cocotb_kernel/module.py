@@ -1,11 +1,13 @@
 # TODO: Remove 'type: ignore' once cocotb v1.9 releases, which contains type stubs
 # TODO: Create type stubs for CocotbKernelApp
+import os
 import signal
 import cocotb # type: ignore
 from cocotb.handle import SimHandleBase # type: ignore
 from typing import Any, Coroutine
 from ipykernel.kernelapp import IPKernelApp
 from IPython.core.interactiveshell import ExecutionResult
+from cocotb_kernel.magics import CocotbMagics # type: ignore
 
 class CocotbKernelApp(IPKernelApp):
     # Patch init_signal because the kernel is ran in a separate thread
@@ -22,6 +24,8 @@ def cocotb_loop_runner(coro: Coroutine[Any, Any, ExecutionResult]) -> ExecutionR
 
 @cocotb.test() # type: ignore
 async def kernel_entry(dut: SimHandleBase) -> None:
+    connection_file = os.environ["COCOTB_CONNECTION_FILE"]
+
     app = CocotbKernelApp.instance(user_ns=dict(dut=dut))
 
     def interrupt_kernel(_signal: int, _frame: Any) -> None:
@@ -37,8 +41,9 @@ async def kernel_entry(dut: SimHandleBase) -> None:
     # Run ipykernel in a separate thread
     @cocotb.external # type: ignore
     def start_kernel() -> None:
-        app.initialize(cocotb.argv[-2:]) # type: ignore
+        app.initialize(["-f", connection_file]) # type: ignore
         app.shell.loop_runner = cocotb_loop_runner # type: ignore
+        app.shell.register_magics(CocotbMagics) # type: ignore
         app.start() # type: ignore
 
     cocotb.log.info('starting ipykernel')
