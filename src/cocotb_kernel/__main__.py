@@ -50,22 +50,28 @@ def main() -> None:
     build_options: dict[str, Any] = options['build']
     verilog_sources = resolve_sources(build_options.pop('verilog_sources', []))
     vhdl_sources = resolve_sources(build_options.pop('vhdl_sources', []))
-    runner.build(**build_options,
-                 verilog_sources=verilog_sources,
-                 vhdl_sources=vhdl_sources,
-                 hdl_toplevel=hdl_toplevel,
-                 parameters=parameters)
+    try:
+        runner.build(**build_options,
+                    verilog_sources=verilog_sources,
+                    vhdl_sources=vhdl_sources,
+                    hdl_toplevel=hdl_toplevel,
+                    parameters=parameters)
+    except:
+        raise RuntimeError('Unable to build design')
 
     # Test
     test_options: dict[str, Any] = options['test']
     extra_env: dict[str, str] = test_options.pop('extra_env', {})
     extra_env["COCOTB_CONNECTION_FILE"] = args.connection_file
-    runner.test(**test_options, 
-                test_module=test_module.__name__, 
-                hdl_toplevel=hdl_toplevel,
-                hdl_toplevel_lang=hdl_toplevel_lang,
-                parameters=parameters,
-                extra_env=extra_env)
+    try:
+        runner.test(**test_options, 
+                    test_module=test_module.__name__, 
+                    hdl_toplevel=hdl_toplevel,
+                    hdl_toplevel_lang=hdl_toplevel_lang,
+                    parameters=parameters,
+                    extra_env=extra_env)
+    except:
+        raise RuntimeError('An error attempting to launch simulator')
 
 if __name__ == '__main__':
     main()
