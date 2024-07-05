@@ -2,6 +2,7 @@
 # TODO: Create type stubs for CocotbKernelApp
 import os
 import signal
+from types import FrameType
 from typing import Any, Coroutine
 
 import cocotb  # type: ignore
@@ -33,7 +34,7 @@ async def kernel_entry(dut: SimHandleBase) -> None:
 
     app = CocotbKernelApp.instance(user_ns=dict(dut=dut))
 
-    def interrupt_kernel(_signal: int, _frame: signal.FrameType) -> None:
+    def interrupt_kernel(_signal: int, _frame: FrameType | None) -> None:
         # ipykernel<=6 uses a dedicated interrupt handler, however in this context the
         # kernel is ran within a thread, preventing signals from being passed to the kernel.
         #
