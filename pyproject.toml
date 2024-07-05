@@ -51,3 +51,8 @@ fixable = ["ALL"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "cocotb_kernel"
+]
