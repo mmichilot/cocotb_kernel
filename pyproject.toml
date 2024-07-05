@@ -23,3 +23,8 @@ dynamic = ["version", "description"]
 
 [project.urls]
 Source = "https://github.com/mmichilot/cocotb_kernel"
+
+[project.optional-dependencies]
+dev = [
+    "ruff ~=0.5.0" 
+]
