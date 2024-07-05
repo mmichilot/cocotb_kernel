@@ -48,6 +48,7 @@ select = [
     "RUF", # ruff-specific rules
 ]
 fixable = ["ALL"]
+ignore = ["ANN101"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
@@ -56,3 +57,8 @@ convention = "google"
 known-first-party = [
     "cocotb_kernel"
 ]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+disallow_untyped_defs = true
