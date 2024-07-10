@@ -10,8 +10,6 @@ from cocotb.handle import SimHandleBase  # type: ignore
 from ipykernel.kernelapp import IPKernelApp
 from IPython.core.interactiveshell import ExecutionResult
 
-from cocotb_kernel.magics import CocotbMagics  # type: ignore
-
 
 class CocotbKernelApp(IPKernelApp):
     # Patch init_signal because the kernel is ran in a separate thread
@@ -50,7 +48,6 @@ async def kernel_entry(dut: SimHandleBase) -> None:
     def start_kernel() -> None:
         app.initialize(["-f", connection_file])  # type: ignore
         app.shell.loop_runner = cocotb_loop_runner  # type: ignore
-        app.shell.register_magics(CocotbMagics)  # type: ignore
         app.start()  # type: ignore
 
     cocotb.log.info("starting ipykernel")
