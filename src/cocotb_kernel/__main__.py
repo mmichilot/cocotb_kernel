@@ -9,11 +9,11 @@ import cocotb_kernel.module as test_module
 
 
 # TODO: Add support for custom configuration file name
-def find_config() -> Path | None:
+def find_config(config_name:(str | None) = None) -> Path | None:
     cwd = Path().resolve()
     dirs = [cwd, *cwd.parents]
     for dir in dirs:
-        config_file = dir / "cocotb.toml"
+        config_file = dir / f"{config_name}.toml"
         if config_file.exists():
             return config_file
     return None
@@ -32,12 +32,12 @@ def main() -> None:
     # Parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("--connection-file", type=str)
-    parser.add_argument("--config-name", type=str)  # TODO: Add support for custom config name
+    parser.add_argument("--config-name", type=str)
     args = parser.parse_args()
 
     # Load config
-    if (config := find_config()) is None:
-        raise RuntimeError("Cannot start cocotb kernel: couldn't find cocotb.toml")
+    if (config := find_config(config_name=args.config_name)) is None:
+        raise RuntimeError(f"Cannot start cocotb kernel: couldn't find {args.config_name}.toml")
     with open(config, "rb") as f:
         options = tomllib.load(f)
 
