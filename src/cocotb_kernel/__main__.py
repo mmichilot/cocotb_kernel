@@ -8,7 +8,6 @@ from cocotb.runner import get_runner  # type: ignore
 import cocotb_kernel.module as test_module
 
 
-# TODO: Add support for custom configuration file name
 def find_config(config_name:(str | None) = None) -> Path | None:
     cwd = Path().resolve()
     dirs = [cwd, *cwd.parents]
