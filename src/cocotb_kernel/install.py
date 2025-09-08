@@ -6,24 +6,29 @@ from pathlib import Path
 
 from jupyter_client.kernelspec import install_kernel_spec
 
-kernel_json = {
-    "argv": [sys.executable, "-m", "cocotb_kernel", "--connection-file", "{connection_file}"],
-    "display_name": "cocotb",
-    "language": "python",
-    "metadata": {"debugger": True},
-}
 
 
-# TODO: Add support for custom config name
 def install_cocotb_kernelspec(
-    user: bool = True, prefix: (str | None) = None, config_name: (str | None) = None
+    user: bool = True,
+    prefix: (str | None) = None,
+    config_name: (str | None) = None,
+    kernel_name: (str | None) = None
 ) -> str:
+    kernel_json = {
+        "argv": [sys.executable,
+                 "-m", "cocotb_kernel",
+                 "--connection-file", "{connection_file}",
+                 "--config-name", config_name],
+        "display_name": kernel_name,
+        "language": "python",
+        "metadata": {"debugger": True},
+    }
     with tempfile.TemporaryDirectory() as td:
         with open(Path(td, "kernel.json"), "w") as f:
             json.dump(kernel_json, f, sort_keys=True)
 
         print("Installing cocotb kernelspec")
-        return install_kernel_spec(td, "cocotb", user=user, prefix=prefix)
+        return install_kernel_spec(td, kernel_name=kernel_name, user=user, prefix=prefix)
 
 
 def main() -> None:
@@ -46,6 +51,10 @@ def main() -> None:
         "--config-name", help="Name of the toml file (default is cocotb)", default="cocotb"
     )
 
+    parser.add_argument(
+        "--kernel_name", help="Name of the kernel (default is cocotb)", default="cocotb"
+    )
+
     args = parser.parse_args()
 
     user = False
@@ -57,7 +66,10 @@ def main() -> None:
     elif args.user:
         user = True
 
-    destination = install_cocotb_kernelspec(user=user, prefix=prefix, config_name=args.config_name)
+    destination = install_cocotb_kernelspec(user=user,
+                                            prefix=prefix,
+                                            config_name=args.config_name,
+                                            kernel_name=args.kernel_name)
     print(f"Installed cocotb kernel to {destination}")
 
 
