@@ -9,11 +9,10 @@ authors = [
 ]
 readme = "README.md"
 dependencies = ["cocotb>=1.8.1"]
-requires-python = ">=3.10,<4"
+requires-python = ">=3.11,<4"
 license = {file = "LICENSE"}
 classifiers = [
     "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Framework :: cocotb",
     "Framework :: Jupyter",
