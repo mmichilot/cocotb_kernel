@@ -77,4 +77,3 @@ root directory and create or open a notebook with the cocotb kernel.
 
 ## Planned Features
 - Move wavedrom support into kernel (cocotb v2.0 removes the wavedrom module)
-- Ability to specify a custom TOML filename, from the default `cocotb.toml`
