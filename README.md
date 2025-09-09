@@ -11,7 +11,7 @@ having a cocotb test module launch ipykernel, which will connect to the notebook
 
 ## Installation
 Prerequisites:
-- Python 3.10+
+- Python 3.11+
 - JupyterLab 4+ or Jupyter Notebook 6+
 - An HDL simulator (such as Icarus Verilog, Verilator, or GHDL)
 
