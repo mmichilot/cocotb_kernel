@@ -9,7 +9,7 @@ authors = [
 ]
 readme = "README.md"
 dependencies = ["cocotb>=2"]
-requires-python = ">=3.11,<3.13"
+requires-python = ">=3.11,<3.14"
 license = {file = "LICENSE"}
 classifiers = [
     "License :: OSI Approved :: MIT License",
