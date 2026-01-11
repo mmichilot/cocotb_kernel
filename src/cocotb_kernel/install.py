@@ -7,18 +7,22 @@ from pathlib import Path
 from jupyter_client.kernelspec import install_kernel_spec
 
 
-
 def install_cocotb_kernelspec(
     user: bool = True,
     prefix: (str | None) = None,
     config_name: (str | None) = None,
-    kernel_name: (str | None) = None
+    kernel_name: (str | None) = None,
 ) -> str:
     kernel_json = {
-        "argv": [sys.executable,
-                 "-m", "cocotb_kernel",
-                 "--connection-file", "{connection_file}",
-                 "--config-name", config_name],
+        "argv": [
+            sys.executable,
+            "-m",
+            "cocotb_kernel",
+            "--connection-file",
+            "{connection_file}",
+            "--config-name",
+            config_name,
+        ],
         "display_name": kernel_name,
         "language": "python",
         "metadata": {"debugger": True},
@@ -66,10 +70,9 @@ def main() -> None:
     elif args.user:
         user = True
 
-    destination = install_cocotb_kernelspec(user=user,
-                                            prefix=prefix,
-                                            config_name=args.config_name,
-                                            kernel_name=args.kernel_name)
+    destination = install_cocotb_kernelspec(
+        user=user, prefix=prefix, config_name=args.config_name, kernel_name=args.kernel_name
+    )
     print(f"Installed cocotb kernel to {destination}")
 
 

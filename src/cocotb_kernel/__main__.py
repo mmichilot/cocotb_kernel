@@ -1,14 +1,14 @@
 import argparse
+import tomllib
 from pathlib import Path
 from typing import Any
 
-import tomllib
 from cocotb_tools.runner import get_runner
 
 import cocotb_kernel.module as test_module
 
 
-def find_config(config_name:(str | None) = None) -> Path | None:
+def find_config(config_name: (str | None) = None) -> Path | None:
     cwd = Path().resolve()
     dirs = [cwd, *cwd.parents]
     for dir in dirs:
