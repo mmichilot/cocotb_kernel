@@ -16,6 +16,11 @@ class CocotbKernelApp(IPKernelApp):
     def init_signal(self) -> None:
         pass
 
+    # Disable shell channel thread to disable subshells
+    def init_control(self, context):
+        super().init_control(context)
+        self.shell_channel_thread = None
+
 
 # Execute code cells in cocotb's event loop
 def cocotb_loop_runner(coro: Coroutine[Any, Any, ExecutionResult]) -> ExecutionResult:
