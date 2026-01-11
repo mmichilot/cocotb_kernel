@@ -11,7 +11,7 @@ having a cocotb test module launch ipykernel, which will connect to the notebook
 
 ## Installation
 Prerequisites:
-- Python 3.11+
+- Python >=3.11,<3.14 (cocotb 2.0.1 supports up to 3.13)
 - JupyterLab 4+ or Jupyter Notebook 6+
 - An HDL simulator (such as Icarus Verilog, Verilator, or GHDL)
 
@@ -58,13 +58,12 @@ hdl_toplevel_lang = "verilog"
 # Build options
 # https://docs.cocotb.org/en/stable/library_reference.html#cocotb.runner.Simulator.build
 [build]
-verilog_sources = ["hdl/foo.sv", "../hdl/foo.sv"] # specify sources relative to cocotb.toml
-vhdl_sources = ["hdl/*.vhdl", "**/*.vhdl"]        # wildcards are also supported
+sources = ["hdl/foo.sv", "../hdl/foo.sv", "hdl/*.vhdl", "**/*.vhdl"] # specify sources relative to cocotb.toml
 
 # Optional: Defines to set for building
 [build.defines]
 
-# Test options
+# Optional: Test options
 # https://docs.cocotb.org/en/stable/library_reference.html#cocotb.runner.Simulator.test
 [test]
 
@@ -74,6 +73,3 @@ vhdl_sources = ["hdl/*.vhdl", "**/*.vhdl"]        # wildcards are also supported
 
 Once the TOML file is created, navigate to or launch JupyterLab within the project's
 root directory and create or open a notebook with the cocotb kernel.
-
-## Planned Features
-- Move wavedrom support into kernel (cocotb v2.0 removes the wavedrom module)
