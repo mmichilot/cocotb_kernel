@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Any
 
 import tomllib
-from cocotb.runner import get_runner  # type: ignore
+from cocotb_tools.runner import get_runner
 
 import cocotb_kernel.module as test_module
 
@@ -51,13 +51,11 @@ def main() -> None:
 
     # Build
     build_options: dict[str, Any] = options["build"]
-    verilog_sources = resolve_sources(build_options.pop("verilog_sources", []))
-    vhdl_sources = resolve_sources(build_options.pop("vhdl_sources", []))
+    sources = resolve_sources(build_options.pop("sources", []))
     try:
         runner.build(
             **build_options,
-            verilog_sources=verilog_sources,
-            vhdl_sources=vhdl_sources,
+            sources=sources,
             hdl_toplevel=hdl_toplevel,
             parameters=parameters,
         )
@@ -65,7 +63,7 @@ def main() -> None:
         raise RuntimeError(f"An error occurred while building the design: {ex}")
 
     # Test
-    test_options: dict[str, Any] = options["test"]
+    test_options: dict[str, Any] = options.get("test", {})
     extra_env: dict[str, str] = test_options.pop("extra_env", {})
     extra_env["COCOTB_CONNECTION_FILE"] = args.connection_file
     try:
