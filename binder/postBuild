@@ -34,6 +34,6 @@ _(sys.executable, "-m", "flit", "install", "--symlink")
 _(sys.executable, "-m", "cocotb_kernel.install", "--sys-prefix")
 
 # install WaveDromPy
-_(sys.executable, "-m", "pip", "install", "wavedrom")
+_(sys.executable, "-m", "pip", "install", "wavedrom", "cocotbext-waves")
 
 print("\ncocotb kernel has been successfully installed\n")

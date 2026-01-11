@@ -17,6 +17,6 @@ dependencies:
   - flit
   # additional packages for demos
   - ipywidgets
-  - verilator >=5.006,<5.024
+  - verilator >=5.036
   - gcc_linux-64
   - gxx_linux-64
