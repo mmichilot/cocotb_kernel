@@ -17,6 +17,7 @@ ROOT = Path.cwd()
 
 additional_pkgs = [
     "flit",
+    "ipykernel>=7.1.0",
     "jupyterlab",
     "ipywidgets",
     "cocotbext-waves"
