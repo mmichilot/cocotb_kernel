@@ -1,7 +1,5 @@
 # TODO: Create type stubs for CocotbKernelApp
 import os
-import signal
-from types import FrameType
 from typing import Any, Coroutine
 
 import cocotb
@@ -38,17 +36,6 @@ async def kernel_entry(dut: SimHandleBase) -> None:
     connection_file = os.environ["COCOTB_CONNECTION_FILE"]
 
     app = CocotbKernelApp.instance(user_ns=dict(dut=dut))
-
-    def interrupt_kernel(_signal: int, _frame: FrameType | None) -> None:
-        # ipykernel<=6 uses a dedicated interrupt handler, however in this context the
-        # kernel is ran within a thread, preventing signals from being passed to the kernel.
-        #
-        # TODO: ipykernel interrupts have been changed to use a queue in a recent pull request
-        # https://github.com/ipython/ipykernel/pull/1079
-        # Update this to call sigint_handler() on the next major update to ipykernel
-        raise NotImplementedError("cocotb_kernel doesn't support interrupting execution")
-
-    signal.signal(signal.SIGINT, interrupt_kernel)
 
     # Run ipykernel in a separate thread
     def _start_kernel() -> None:
