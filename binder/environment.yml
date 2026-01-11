@@ -12,11 +12,8 @@ channels:
 dependencies:
   # runtime dependencies
   - python >=3.11,<3.14
-  - jupyterlab >=4.0.0,<5
-  # build dependencies
-  - flit
-  # additional packages for demos
-  - ipywidgets
+
+  # additional packages
   - verilator >=5.036
   - gcc_linux-64
   - gxx_linux-64

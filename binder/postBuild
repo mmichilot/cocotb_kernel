@@ -15,6 +15,13 @@ from typing import Any
 
 ROOT = Path.cwd()
 
+additional_pkgs = [
+    "flit",
+    "jupyterlab",
+    "ipywidgets",
+    "cocotbext-waves"
+]
+
 def _(*args: str, **kwargs: Any) -> None:
     """ Run a command, echoing the args
 
@@ -29,11 +36,11 @@ def _(*args: str, **kwargs: Any) -> None:
 # verify the environment is self-consistent before even starting
 _(sys.executable, "-m", "pip", "check")
 
-# install the kernel
-_(sys.executable, "-m", "flit", "install", "--symlink")
-_(sys.executable, "-m", "cocotb_kernel.install", "--sys-prefix")
+# install additional pip packages
+_(sys.executable, "-m", "pip", "install", *additional_pkgs)
 
-# install WaveDromPy
-_(sys.executable, "-m", "pip", "install", "wavedrom", "cocotbext-waves")
+# install the kernel
+_(sys.executable, "-m", "flit", "install", "--symlink", "--extras", "lint")
+_(sys.executable, "-m", "cocotb_kernel.install", "--sys-prefix")
 
 print("\ncocotb kernel has been successfully installed\n")
