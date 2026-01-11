@@ -1,12 +1,12 @@
-# TODO: Remove 'type: ignore' once cocotb v1.9 releases, which contains type stubs
 # TODO: Create type stubs for CocotbKernelApp
 import os
 import signal
 from types import FrameType
 from typing import Any, Coroutine
 
-import cocotb  # type: ignore
-from cocotb.handle import SimHandleBase  # type: ignore
+import cocotb
+from cocotb.handle import SimHandleBase
+from cocotb.task import bridge, resume
 from ipykernel.kernelapp import IPKernelApp
 from IPython.core.interactiveshell import ExecutionResult
 
@@ -17,16 +17,18 @@ class CocotbKernelApp(IPKernelApp):
         pass
 
 
-# Add ipykernel's coroutines to cocotb's event loop
+# Execute code cells in cocotb's event loop
 def cocotb_loop_runner(coro: Coroutine[Any, Any, ExecutionResult]) -> ExecutionResult:
-    @cocotb.function  # type: ignore
-    async def coro_wrapper() -> ExecutionResult:
-        return await coro
+         
+    async def _coro_wrapper() -> ExecutionResult:
+            return await coro
+    
+    coro_wrapper = resume(_coro_wrapper)
+    return coro_wrapper()
 
-    return coro_wrapper()  # type: ignore
 
 
-@cocotb.test()  # type: ignore
+@cocotb.test()
 async def kernel_entry(dut: SimHandleBase) -> None:
     connection_file = os.environ["COCOTB_CONNECTION_FILE"]
 
@@ -44,11 +46,11 @@ async def kernel_entry(dut: SimHandleBase) -> None:
     signal.signal(signal.SIGINT, interrupt_kernel)
 
     # Run ipykernel in a separate thread
-    @cocotb.external  # type: ignore
-    def start_kernel() -> None:
-        app.initialize(["-f", connection_file])  # type: ignore
+    def _start_kernel() -> None:
+        app.initialize(["-f", connection_file])
         app.shell.loop_runner = cocotb_loop_runner  # type: ignore
-        app.start()  # type: ignore
+        app.start()
+    start_kernel = bridge(_start_kernel)
 
     cocotb.log.info("starting ipykernel")
     await start_kernel()
